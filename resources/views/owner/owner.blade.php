@@ -91,7 +91,7 @@
 
                                 <td>
                                     <div class="row">
-                                        <a href="#" class="btn btn-primary mr-1"> <i class="far fa-edit"></i></a>
+                                        <a href="{{route('table-update'), $item->id}}" class="btn btn-primary mr-1"> <i class="far fa-edit"></i></a>
                                         <form method="post" action="#">
                                             @method('DELETE')
                                             @csrf
@@ -184,11 +184,8 @@
                 type: "POST",
                 url: url,
                 data: data,
-                complete: function(data) {
-
-                }
+                complete: function(data) {}
             });
         });
     });
-</script>
-@endsection
+</script> @endsection

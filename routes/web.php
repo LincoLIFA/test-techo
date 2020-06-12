@@ -34,10 +34,16 @@ Route::get('/Profile', 'ProfileController@index')->name('user_module')->middlewa
 
 Route::get('/Profile/{id}', 'ProfileController@showProfile')->name('show_profile')->middleware('auth', 'verified');
 
-Route::get('/TableWork', 'TableWorkController@index')->name('pet_module')->middleware('auth', 'verified');
+Route::get('/TableWork', 'TableWorkController@index')->name('table_module')->middleware('auth', 'verified');
 
 Route::put('/update/data/user', 'UserController@update')->name('updateUser')->middleware('auth', 'verified');
 
 Route::post('/search/region', 'UserController@showOwner')->name('search-region')->middleware('auth', 'verified');
 
 Route::get('/Table/Owner', 'ProfileController@showOwner')->name('owner_module')->middleware('auth', 'verified');
+
+Route::post('new/Table/Work', 'TableWorkController@store')->name('newTableWork')->middleware('auth', 'verified');
+
+Route::put('new/Table/{id}', 'TableWorkController@updateTable')->name('updateTableWork')->middleware('auth', 'verified');
+
+Route::get('/TableWork/{id}', 'TableWorkController@showUpdate')->name('table-update')->middleware('auth', 'verified');

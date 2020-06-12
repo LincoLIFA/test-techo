@@ -45,7 +45,7 @@
                         <b>Datos de nueva mesa de trabajo</b>
                     </div><!-- /.card-header -->
                     <div class="card-body">
-                        <form class="form-horizontal" id="profile-form">
+                        <form class="form-horizontal" id="table-form">
                             <div class="form-group row">
                                 @csrf
                                 <label for="inputName" class="col-sm-2 col-form-label">Nombre</label>
@@ -98,56 +98,11 @@
         <!-- /.row -->
     </div><!-- /.container-fluid -->
 </section>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $.validator.setDefaults({
-            submitHandler: function() {}
-        });
-        $('#profile-form').validate({
-            rules: {
-                name: {
-                    required: true,
-                },
-                id: {
-                    required: true,
-                },
-                comuna: {
-                    required: true,
-                },
-                comunidad: {
-                    required: true,
-                },
-            },
-            messages: {
-                email: {
-                    required: "Por favor ingresa la información",
-                    email: "Por favor, inressa la información requerida"
-                },
-            },
-            errorElement: 'span',
-            errorPlacement: function(error, element) {
-                error.addClass('invalid-feedback');
-                element.closest('.form-group').append(error);
-            },
-            highlight: function(element, errorClass, validClass) {
-                $(element).addClass('is-invalid');
-            },
-            unhighlight: function(element, errorClass, validClass) {
-                $(element).removeClass('is-invalid');
-            }
-        });
-    });
-
-
-    $(function() {
-        $('[data-mask]').inputmask();
-    });
-</script>
 <script>
     $(document).ready(function() {
         $('#btn-guardar').click(function() {
             var data = $('#profile-form').serialize();
-            var url = "{{route ('newTableWork'), $table->id ?? ''}}";
+            var url = "{{route ('newTableWork')}}";
             $.ajax({
                 type: "POST",
                 url: url,

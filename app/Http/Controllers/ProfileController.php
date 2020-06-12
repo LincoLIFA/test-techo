@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Region;
 use App\Region_TableWork;
+use App\TableWork;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -42,6 +43,7 @@ class ProfileController extends UserController
     {
 
         $region = Region::all();
+        $table = Tablework::all();
         $acronym = $this->acronymName();
         $modules = $this->getModules();
 
