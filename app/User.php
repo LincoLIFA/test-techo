@@ -42,9 +42,4 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany('App\Modules', 'user_modules');
     }
-
-    public function pets()
-    {
-        return $this->hasMany('App\Pets', 'user_id');
-    }
 }

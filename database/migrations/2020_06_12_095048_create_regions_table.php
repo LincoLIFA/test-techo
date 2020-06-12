@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTypePetsTable extends Migration
+class CreateRegionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateTypePetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('type_pets', function (Blueprint $table) {
+        Schema::create('regions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('reference')->nullable();
@@ -28,6 +28,6 @@ class CreateTypePetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('type_pets');
+        Schema::dropIfExists('regions');
     }
 }

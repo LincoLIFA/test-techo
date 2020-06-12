@@ -16,9 +16,9 @@ class CreateUserModulesTable extends Migration
         Schema::create('user_modules', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id'); // Relación con usuario
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDeletee();
             $table->unsignedBigInteger('modules_id'); // Relación con Perfil 
-            $table->foreign('modules_id')->references('id')->on('modules');
+            $table->foreign('modules_id')->references('id')->on('modules')->cascadeOnDelete();
             $table->timestamps();
         });
     }

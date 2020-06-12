@@ -42,7 +42,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($pets as $item)
+                            @foreach($tableWork as $item)
                             <tr>
                                 <td>
                                     <a href="">{{$item->id}}</a>

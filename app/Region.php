@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Type_pets extends Model
+class Region extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -15,8 +15,8 @@ class Type_pets extends Model
         'name', 'reference'
     ];
 
-    public function pets()
+    public function TableWork()
     {
-        return $this->hasMany('App\Pets');
+        return $this->hasMany('App\TableWork');
     }
 }

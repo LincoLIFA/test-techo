@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Pets;
+use App\Region;
+use App\Region_TableWork;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 
 class ProfileController extends UserController
@@ -26,7 +27,6 @@ class ProfileController extends UserController
 
     public function index()
     {
-
         $user = $this->getUser();
         $acronym = $this->acronymName();
         $modules = $this->getModules();
@@ -38,32 +38,35 @@ class ProfileController extends UserController
         ]);
     }
 
-    public function showOwner()
+    public function showOwner(Request $request)
     {
-        $users = User::with('pets')->get();
-        $pets = [];
-        foreach ($users as $user) {
-            $id = $user->id;
-            $pets[$id] = $user->Pets()->get()->all();
-        }
+
+        $region = Region::all();
         $acronym = $this->acronymName();
         $modules = $this->getModules();
+
+        $find = $request->id;
+        if (is_null($find)) {
+            $find = 13;
+        }
+        $data = $this->getWorkTable($find);
+
+        $array = $this->processData($data);
 
         return view('owner.owner', [
             'acronym' => $acronym,
             'modules' => $modules,
-            'users' => $users,
-            'pets' => $pets[$id]
+            'data' => $array,
+            'region' => $region
         ]);
     }
 
     /**
      * Retorna el perfil del dueño de una mascota
-     * @param Request $request
      * @param int $id
      * @return mixed
      */
-    public function showProfile(Request $request, int $id)
+    public function showProfile(int $id)
     {
         $acronym = $this->acronymName();
         $modules = $this->getModules();
@@ -73,5 +76,45 @@ class ProfileController extends UserController
             'modules' => $modules,
             'user' => $user
         ]);
+    }
+
+    /**
+     * Obtiene la mesa de trabajo por region
+     * @param int $region
+     * @return json $data
+     */
+    public function getWorkTable($region)
+    {
+        $response = Http::asForm()->post('https://domain.chile.techo.org/api/v2/', [
+            'f' => 'gms',
+            'region' => $region,
+        ]);
+        $data = $response->getBody()->getContents();
+        return $data;
+    }
+
+    /**
+     * Procesa json de API Techo para generar Tabla
+     * @param json $data
+     * @return array $processData
+     */
+    public function processData($data)
+    {
+        $decode = json_decode($data);
+        return $decode->data;
+    }
+
+    /**
+     * Genera Mapa en Google Maps de Mesas de trabajo
+     * @param string $latitud
+     * @param string $longitud
+     * @return object
+     */
+    public function googleMaps(string $latitud, string $longitud)
+    {
+        $key = 'AIzaSyBL8rFtgXOvnzsJuWoWh7mj2rFSmwv5VE8';
+        $url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' . $latitud . ',' . $longitud . '&key=' . $key;
+        $response = Http::post($url);
+        return $response->getBody()->getContents();
     }
 }
